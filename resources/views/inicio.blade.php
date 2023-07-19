@@ -10,13 +10,13 @@
     </div>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://wallpapercave.com/wp/wp4871892.jpg" class="rounded mx-auto d-block w-100" alt="...">
+            <img src="{{ asset('img/coming_soon.gif')}}" class="rounded mx-auto d-block w-100" alt="coming soon">
         </div>
         <div class="carousel-item">
-            <img src="https://wallpapercave.com/wp/wp4871908.jpg" class="rounded mx-auto d-block w-100" alt="...">
+            <img src="{{ asset('img/dr1ve.png')}}" class="rounded mx-auto d-block w-100" alt="logo dr1ve">
         </div>
         <div class="carousel-item">
-            <img src="https://wallpapercave.com/wp/wp11885481.png" class="rounded mx-auto d-block w-100" alt="...">
+            <img src="{{ asset('img/coming_soon.gif')}}" class="rounded mx-auto d-block w-100" alt="coming soon">
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
