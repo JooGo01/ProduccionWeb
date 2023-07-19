@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Talle extends Model
 {
     protected $fillable=[
-        'talle',
+        'talla',
     ];
     use HasFactory;
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\IndumentariaController;
 use App\Http\Controllers\PanelController;
 use App\Http\Controllers\TiendaController;
+use App\Models\Talle;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,15 @@ Route::get('/', function () {
 });
 
 Route::get('/inicio', function(){
+    return view('inicio');
+});
+
+//creamos una ruta para crear los talles
+Route::get('/creartalle', function(){
+    Talle::create(['talla'=>'S']);
+    Talle::create(['talla'=>'M']);
+    Talle::create(['talla'=>'L']);
+    Talle::create(['talla'=>'XL']);
     return view('inicio');
 });
 
