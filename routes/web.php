@@ -65,4 +65,12 @@ Route::group(['middleware'=>['is_admin']], function(){
     
     Route::resource('/indumentarias', IndumentariaController::class);
 });
+
+Route::get('/', [CartController::class, 'shop'])->name('tienda.index');
+Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
+Route::post('/add', [CartController::class, 'add'])->name('cart.store');
+Route::post('/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
+
 // Route::post('/home', [App\Http\Controllers\HomeController::class, 'inicio']);
