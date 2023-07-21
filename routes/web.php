@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\IndumentariaController;
 use App\Http\Controllers\PanelController;
 use App\Http\Controllers\TiendaController;
+use App\Http\Controllers\CartController;
 use App\Models\Talle;
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +67,7 @@ Route::group(['middleware'=>['is_admin']], function(){
     Route::resource('/indumentarias', IndumentariaController::class);
 });
 
-Route::get('/', [CartController::class, 'shop'])->name('tienda.index');
+//Route::get('/', [CartController::class, 'shop'])->name('tienda.index');
 Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
 Route::post('/add', [CartController::class, 'add'])->name('cart.store');
 Route::post('/update', [CartController::class, 'update'])->name('cart.update');

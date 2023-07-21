@@ -14,7 +14,7 @@ class CartController extends Controller
         $indumentaria=Indumentaria::where('estado',0)->orderByDesc('id')->get();
         $categoria=Categoria::all();
         $talle=Talle::all();
-        dd($products);
+        //dd($indumentaria);
         return view('tienda.index')->with([
             'categorias'=>$categoria,
             'indumentarias'=>$indumentaria,
@@ -27,7 +27,7 @@ class CartController extends Controller
         $indumentaria=Indumentaria::where('estado',0)->orderByDesc('id')->get();
         $categoria=Categoria::all();
         $talle=Talle::all();
-        //dd($cartCollection);
+        dd($cartCollection);
         return view('cart')->with([
             'cartCollection' => $cartCollection,
             'categorias'=>$categoria,
@@ -49,11 +49,11 @@ class CartController extends Controller
         ]);
     }
 
-    public function add(Request$request){
-        \Cart::add(array(
-            'id' => $request->id,
-            'cantidad'=> $request->cantidad,
-        ));
+    public function add(Request $request){
+        $arr_producto=array('idproducto' => $request->idProducto,
+        'idtalle'=>$request->talle,
+        'cantidad'=> $request->cantidad);
+        \Cart::add($arr_producto);
         $cartCollection = \Cart::getContent();
         $indumentaria=Indumentaria::where('estado',0)->orderByDesc('id')->get();
         $categoria=Categoria::all();
