@@ -27,8 +27,8 @@ class CartController extends Controller
         $indumentaria=Indumentaria::where('estado',0)->orderByDesc('id')->get();
         $categoria=Categoria::all();
         $talle=Talle::all();
-        dd($cartCollection);
-        return view('cart')->with([
+        //dd($cartCollection);
+        return view('cart.index')->with([
             'cartCollection' => $cartCollection,
             'categorias'=>$categoria,
             'indumentarias'=>$indumentaria,
