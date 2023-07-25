@@ -7,6 +7,7 @@ use App\Models\Indumentaria;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Talle;
 
 class StockController extends Controller
 {
@@ -18,9 +19,11 @@ class StockController extends Controller
         //
         $listadoStock=Stock::paginate(5);
         $listadoIndumentarias=Indumentaria::all();
-        return view('indumentarias.index', [
+        $listadoTalles=Talle::all();
+        return view('stocks.index', [
             'stock'=>$listadoStock,
-            'productos' => $listadoIndumentarias
+            'productos' => $listadoIndumentarias,
+            'talles'=>$listadoTalles
         ]);
     }
 
@@ -31,8 +34,10 @@ class StockController extends Controller
     {
         //
         $listadoIndumentarias=Indumentaria::all();
-        return view('indumentarias.create', [
-            'categorias'=>$listadoIndumentarias
+        $listadoTalles=Talle::all();
+        return view('stocks.create', [
+            'productos' => $listadoIndumentarias,
+            'talles'=>$listadoTalles
         ]);
     }
 
@@ -42,6 +47,26 @@ class StockController extends Controller
     public function store(Request $request)
     {
         //
+        $rules=[
+            'producto'=>'required',
+            'talle'=>'required',
+            'cantidad'=>'required|max:9999999'
+        ];
+
+        $validator=Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return redirect()
+		            ->route('stocks.create')
+		            ->withErrors($validator)
+		            ->withInput();
+        }
+        
+        Stock::create([
+            'id_indumentaria'=>$request->producto,
+            'id_talle'=>$request->talle,
+            'cantidad'=>$request->cantidad
+        ]);
+        return redirect()->route('stocks.index')->with('status', 'El registro de stock se ha agregado correctamente.');
     }
 
     /**
@@ -50,6 +75,13 @@ class StockController extends Controller
     public function show(Stock $stock)
     {
         //
+        $listadoIndumentarias=Indumentaria::where('id',$stock->id_indumentaria)->first();
+        $listadoTalles=Talle::where('id',$stock->id_talle)->first();;
+        return view('stocks.show', [
+            'stock'=>$stock,
+            'producto'=>$listadoIndumentarias,
+            'talle'=>$listadoTalles
+        ]);
     }
 
     /**
@@ -58,6 +90,13 @@ class StockController extends Controller
     public function edit(Stock $stock)
     {
         //
+        $listadoIndumentarias=Indumentaria::where('id',$stock->id_indumentaria)->first();
+        $listadoTalles=Talle::where('id',$stock->id_talle)->first();;
+        return view('stocks.edit', [
+            'stock'=>$stock,
+            'producto'=>$listadoIndumentarias,
+            'talle'=>$listadoTalles
+        ]);
     }
 
     /**
@@ -66,6 +105,23 @@ class StockController extends Controller
     public function update(Request $request, Stock $stock)
     {
         //
+        $rules=[
+            'cantidad'=>'required|max:9999999'
+        ];
+        
+        
+        $validator=Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return redirect()
+            ->route('stocks.edit')
+            ->withErrors($validator)
+            ->withInput();
+        }
+        
+        $stock->update([
+            'cantidad'=>$request->cantidad
+        ]);
+        return redirect()->route('stocks.index')->with('status', 'La cantidad del stock se ha modificado correctamente.');
     }
 
     /**
@@ -74,5 +130,7 @@ class StockController extends Controller
     public function destroy(Stock $stock)
     {
         //
+        $stock->delete();
+        return redirect()->route('stocks.index')->with('status', 'El registro del stock se ha eliminado correctamente.');
     }
 }

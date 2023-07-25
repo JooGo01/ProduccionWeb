@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <a href="{{ route('categorias.index') }}" class="botonAgregar btn btn-primary" role="button" aria-disabled="true"><i class="bi bi-caret-right-fill"></i>Panel Categoria</a>
                     <a href="{{ route('indumentarias.index') }}" class="botonAgregar btn btn-primary" role="button" aria-disabled="true"><i class="bi bi-caret-right-fill"></i>Panel Indumentaria</a>
-                    <a href="#" class="botonAgregar btn btn-primary disabled" role="button" aria-disabled="true"><i class="bi bi-caret-right-fill"></i>Panel Stock</a>
+                    <a href="{{ route('stocks.index') }}" class="botonAgregar btn btn-primary" role="button" aria-disabled="true"><i class="bi bi-caret-right-fill"></i>Panel Stock</a>
                 </div>
             </div>
         </div>

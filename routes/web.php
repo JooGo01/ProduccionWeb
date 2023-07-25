@@ -6,6 +6,7 @@ use App\Http\Controllers\IndumentariaController;
 use App\Http\Controllers\PanelController;
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\StockController;
 use App\Models\Talle;
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,8 @@ Route::group(['middleware'=>['is_admin']], function(){
     Route::resource('/categorias', CategoriaController::class);
     
     Route::resource('/indumentarias', IndumentariaController::class);
+
+    Route::resource ('/stocks', StockController::class);
 });
 
 Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
