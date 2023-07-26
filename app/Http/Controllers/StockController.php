@@ -133,4 +133,11 @@ class StockController extends Controller
         $stock->delete();
         return redirect()->route('stocks.index')->with('status', 'El registro del stock se ha eliminado correctamente.');
     }
+
+    public function getCantidadStock(Request $request){
+        $stock=Stock::where(['id_indumentaria',$request->id_indumentaria],['id_talla', $request->id_talla])->first();
+        return response()->json([
+            'stock'=>$stock
+        ]);        
+    }
 }
