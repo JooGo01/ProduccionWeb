@@ -50,9 +50,11 @@ class CartController extends Controller
     }
 
     public function add(Request $request){
-        $arr_producto=array('idproducto' => $request->idProducto,
-        'idtalle'=>$request->talle,
-        'cantidad'=> $request->cantidad);
+        $arr_producto=array(
+            'idstock'=>$request->idstock,
+            'idproducto' => $request->idProducto,
+            'idtalle'=>$request->talle,
+            'cantidad'=> $request->cantidad);
         \Cart::add($arr_producto);
         $cartCollection = \Cart::getContent();
         $indumentaria=Indumentaria::where('estado',0)->orderByDesc('id')->get();
