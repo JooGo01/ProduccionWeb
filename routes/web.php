@@ -7,6 +7,7 @@ use App\Http\Controllers\PanelController;
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\ContactoController;
 use App\Models\Talle;
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,9 @@ Route::get('/inicio', function(){
     return view('inicio');
 });
 
+Route::get('/nosotros', function(){
+    return view('nosotros');
+});
 //creamos una ruta para crear los talles
 Route::get('/creartalle', function(){
     Talle::create(['talla'=>'S']);
@@ -43,6 +47,14 @@ Route::get('/creartalle', function(){
 Route::get('/tienda', [
     TiendaController::class, 'index'
 ])->name('tienda.index');
+
+Route::get("/contacto", [
+    ContactoController::class, 'index'
+])->name("contacto.index");
+
+Route::post("/contacto/enviar", [
+    ContactoController::class, 'submitForm'
+])->name("contacto.submit");
 
 Route::get('/getCantidadStock/{producto}/{talle}', [TiendaController::class, 'getCantidadStock']);
 
