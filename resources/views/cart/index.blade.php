@@ -5,6 +5,12 @@
 <div class="container text-center contenedor-tienda">
     <div class="row align-items-start">
         @if(\Cart::getTotalQuantity()>0)
+            @if(count($cartCollection)>0)
+                <form action="{{ route('cart.shop') }}" method="POST">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-success btn-md">Comprar</button> 
+                </form>
+            @endif
             @foreach ($cartCollection as $item)
                 <div class="col-4">
                     <div class="card" style="width: 18rem;">        

@@ -6,30 +6,42 @@ use Illuminate\Http\Request;
 use App\Models\Indumentaria;
 use App\Models\Categoria;
 use App\Models\Talle;
+use App\Models\Stock;
 
 class CartController extends Controller
 {
     public function shop()
     {
+        $carrito = \Cart::getContent();
         $indumentaria=Indumentaria::where('estado',0)->orderByDesc('id')->get();
-        $categoria=Categoria::all();
         $talle=Talle::all();
+        foreach($carrito as $itemcarrito){
+            $cantidad=$itemcarrito->cantidad;
+            $idStock=$itemcarrito->idstock;
+            $listadoStock=Stock::where('id',$idStock)->orderByDesc('id')->get();
+            foreach($listadoStock as $stock){
+                $cantidadStock=$stock->cantidad;
+                $cantidadNuevaStock=$cantidadStock-$cantidad;
+                Stock::where('id', $idStock)->update(['cantidad'=>$cantidadNuevaStock]);
+            }
+        }
         //dd($indumentaria);
-        return view('tienda.index')->with([
-            'categorias'=>$categoria,
+        \Cart::clear();
+        return view('cart.shop')->with([
+            'cartCollection'=>$carrito,
             'indumentarias'=>$indumentaria,
             'talles'=>$talle,
         ]);
     }
 
     public function cart()  {
-        $cartCollection = \Cart::getContent();
+        $carrito = \Cart::getContent();
         $indumentaria=Indumentaria::where('estado',0)->orderByDesc('id')->get();
         $categoria=Categoria::all();
         $talle=Talle::all();
         //dd($cartCollection);
         return view('cart.index')->with([
-            'cartCollection' => $cartCollection,
+            'cartCollection' => $carrito,
             'categorias'=>$categoria,
             'indumentarias'=>$indumentaria,
             'talles'=>$talle,
@@ -37,12 +49,12 @@ class CartController extends Controller
     }
     public function remove(Request $request){
         \Cart::remove($request->id);
-        $cartCollection = \Cart::getContent();
+        $carrito = \Cart::getContent();
         $indumentaria=Indumentaria::where('estado',0)->orderByDesc('id')->get();
         $categoria=Categoria::all();
         $talle=Talle::all();
         return redirect()->route('cart.index')->with([
-            'cartCollection' => $cartCollection,
+            'cartCollection' => $carrito,
             'categorias'=>$categoria,
             'indumentarias'=>$indumentaria,
             'talles'=>$talle,
@@ -56,12 +68,12 @@ class CartController extends Controller
             'idtalle'=>$request->talle,
             'cantidad'=> $request->cantidad);
         \Cart::add($arr_producto);
-        $cartCollection = \Cart::getContent();
+        $carrito = \Cart::getContent();
         $indumentaria=Indumentaria::where('estado',0)->orderByDesc('id')->get();
         $categoria=Categoria::all();
         $talle=Talle::all();
         return redirect()->route('cart.index')->with([
-            'cartCollection' => $cartCollection,
+            'cartCollection' => $carrito,
             'categorias'=>$categoria,
             'indumentarias'=>$indumentaria,
             'talles'=>$talle,
@@ -76,12 +88,12 @@ class CartController extends Controller
                     'value' => $request->quantity
                 ),
         ));
-        $cartCollection = \Cart::getContent();
+        $carrito = \Cart::getContent();
         $indumentaria=Indumentaria::where('estado',0)->orderByDesc('id')->get();
         $categoria=Categoria::all();
         $talle=Talle::all();
         return redirect()->route('cart.index')->with([
-            'cartCollection' => $cartCollection,
+            'cartCollection' => $carrito,
             'categorias'=>$categoria,
             'indumentarias'=>$indumentaria,
             'talles'=>$talle,
