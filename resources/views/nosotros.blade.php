@@ -5,7 +5,7 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-6">
-        <img src="img/drive.png" alt="Imagen de Dr1ve" class="img-fluid">
+        <img src="img/dr1ve.png" alt="Imagen de Dr1ve" class="img-fluid">
       </div>
       <div class="col-md-6">
         <h2>Nuestra Historia</h2>
